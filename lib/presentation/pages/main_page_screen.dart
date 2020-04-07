@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'favorite_widget_state.dart';
+import 'package:multilayerapp/presentation/widgets/favorite_star/favorite_widget_state.dart';
 
 class MainPageScreen extends StatelessWidget {
-  static const String _PAGE_TITLE = "Funclub szlonej Puchy z Różanki";
-  static const String _PAGE_SUBTITLE = "Pucha to szlaony kot, co uwielbia drapać nowe kanapy i fotele";
+  static const String _PAGE_TITLE = "Mobile VAT calculator";
+  static const String _PAGE_SUBTITLE = "This app will help you to calculate a polish VAT rates from your invoices";
+  static const String _MAIN_PAGE_IMAGE = "tax.jpeg";
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Page')
+        title: Text('VAT-insider')
       ),
           body: Center(
             child: Wrap(
@@ -24,8 +24,8 @@ class MainPageScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                            _addButton(Icons.call, "CALL", "call", context),
-                            _addButton(Icons.description, "DESCRIPTION", "description", context),
+                            _addButton(Icons.account_balance_wallet, "CALCULATOR", "calculator", context),
+                            _addButton(Icons.call, "CONTACT", "contact", context),
                             _addButton(Icons.share, "SHARE", "share", context),
                             ])
                     ),
@@ -111,8 +111,13 @@ class MainPageScreen extends StatelessWidget {
   }
 
   Widget _addWallpaper() {
-    return Image.asset(
-        'images/pucha.jpeg',
-        fit: BoxFit.cover);
+    return Container(
+        height: 150,
+        width: 500,
+        child:
+          Image.asset(
+          'images/' + _MAIN_PAGE_IMAGE,
+          fit: BoxFit.fitWidth)
+    );
   }
 }
