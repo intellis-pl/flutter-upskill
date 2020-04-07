@@ -22,7 +22,8 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
 
     //yield every state emmited from the when statement (from every events like getResult, getDetailedResult etc.)
     yield* event.when(
-        getResult: (getResultEvent) => mapGetResultToState(getResultEvent)
+        getResult: (getResultEvent) => mapGetResultToState(getResultEvent),
+        getDetailedResult: (getDetailedResult ) => mapGetDetailedResultToState(getDetailedResult)
     );
   }
 
@@ -32,6 +33,15 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
       yield CalculatorState.loaded(calculator: result);
     } on ArgumentError {
       yield CalculatorState.error(message: "Invalid Argument: ${getResultEvent.amount}");
+    }
+  }
+
+  Stream<CalculatorState> mapGetDetailedResultToState(GetDetailedResult getDetailedResult) async* {
+    try{
+      final CalculatorResponse result = await calculatorRepository.fetchVatResult(getDetailedResult.amount);
+      yield CalculatorState.loaded(calculator: result);
+    } on ArgumentError {
+      yield CalculatorState.error(message: "Invalid Argument: ${getDetailedResult.amount}");
     }
   }
 }

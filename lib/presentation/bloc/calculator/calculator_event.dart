@@ -8,25 +8,9 @@ enum _CalculatorEvent {
     DataField('amount', String)
   ])
   GetResult,
+  @Data(fields: [
+    DataField('amount', String)
+  ])
+  GetDetailedResult
   //add other events here
 }
-
-/*class GetResult extends CalculatorEvent {
-  final String amount;
-
-  GetResult(this.amount);
-
-  @override
-  List<Object> get props => [amount];
-}
-
-class GetDetailedResult extends CalculatorEvent {
-  final String amount;
-
-  GetDetailedResult(this.amount);
-
-  @override
-  List<Object> get props => [amount];
-
-
-}*/
