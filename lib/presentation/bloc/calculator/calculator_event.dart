@@ -1,10 +1,17 @@
-import 'package:equatable/equatable.dart';
+import 'package:super_enum/super_enum.dart';
 
-abstract class CalculatorEvent extends Equatable {
-  const CalculatorEvent();
+part 'calculator_event.g.dart';
+
+@superEnum
+enum _CalculatorEvent {
+  @Data(fields: [
+    DataField('amount', String)
+  ])
+  GetResult,
+  //add other events here
 }
 
-class GetResult extends CalculatorEvent {
+/*class GetResult extends CalculatorEvent {
   final String amount;
 
   GetResult(this.amount);
@@ -22,4 +29,4 @@ class GetDetailedResult extends CalculatorEvent {
   List<Object> get props => [amount];
 
 
-}
+}*/

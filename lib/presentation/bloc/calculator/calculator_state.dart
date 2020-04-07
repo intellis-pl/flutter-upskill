@@ -1,40 +1,20 @@
-import 'package:equatable/equatable.dart';
-import 'package:multilayerapp/domain/entities/calculator_result.dart';
+import 'package:multilayerapp/domain/entities/calculator_response.dart';
+import 'package:super_enum/super_enum.dart';
 
-abstract class CalculatorState extends Equatable {
-  const CalculatorState();
-}
+part 'calculator_state.g.dart';
 
-class CalculatorInitialState extends CalculatorState {
+@superEnum
+enum _CalculatorState {
+  @object
+  Initial,@object
+  Loading,
 
-  const CalculatorInitialState();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CalculatorLoading extends CalculatorState {
-  const CalculatorLoading();
-
-  @override
-  List<Object> get props => [];
-}
-
-class CalculatorLoaded extends CalculatorState {
-  final CalculatorResult calculator;
-
-  CalculatorLoaded(this.calculator);
-
-  @override
-  List<Object> get props => [calculator];
-}
-
-class CalculatorError extends CalculatorState {
-  final String message;
-
-  const CalculatorError(this.message);
-
-  @override
-  List<Object> get props => [message];
-
+  //class with constructor
+  @Data(fields: [
+    DataField('calculator', CalculatorResponse)
+  ])
+  Loaded,@Data(fields: [
+    DataField('message', String)
+  ])
+Error
 }
