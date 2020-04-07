@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:injectable/injectable.dart';
@@ -20,17 +21,23 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
   Stream<CalculatorState> mapEventToState(
     CalculatorEvent event,
   ) async* {
+    log('data: $event');
     yield CalculatorLoading();
     if(event is GetResult) {
-      final CalculatorResult result = await calculatorRepository.fetchVatResult(event.amount);
-      yield CalculatorLoaded(result);
+      try{
+        final CalculatorResult result = await calculatorRepository.fetchVatResult(event.amount);
+        yield CalculatorLoaded(result);
+      } on ArgumentError {
+        yield CalculatorError("Invalid Argument: ${event.amount}");
+      }
     }
     if(event is GetDetailedResult) {
-      final CalculatorResult result = await calculatorRepository.fetchDetailedVatResult(event.amount);
-      yield CalculatorLoaded(result);
-    }
-    if(event is CalculatorError) {
-      yield CalculatorError("somethong goes wrong, ho hohoho");
+      try {
+        final CalculatorResult result = await calculatorRepository
+            .fetchDetailedVatResult(event.amount);
+        yield CalculatorLoaded(result);
+      } on ArgumentError {}
+      yield CalculatorError("Invalid Argument: ${event.amount}");
     }
 
   }

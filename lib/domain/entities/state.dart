@@ -1,4 +1,4 @@
-enum BlocState {
+enum State {
   INIT,
   LOADING,
   LOADED,

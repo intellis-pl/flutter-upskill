@@ -1,8 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
 import 'package:multilayerapp/domain/entities/calculator_result.dart';
 
-@immutable
 abstract class CalculatorState extends Equatable {
   const CalculatorState();
 }
@@ -23,12 +21,12 @@ class CalculatorLoading extends CalculatorState {
 }
 
 class CalculatorLoaded extends CalculatorState {
-  final CalculatorResult result;
+  final CalculatorResult calculator;
 
-  CalculatorLoaded(this.result);
+  CalculatorLoaded(this.calculator);
 
   @override
-  List<Object> get props => [result];
+  List<Object> get props => [calculator];
 }
 
 class CalculatorError extends CalculatorState {

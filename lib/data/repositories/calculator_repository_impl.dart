@@ -6,23 +6,29 @@ import 'package:multilayerapp/domain/repositories/calculator_repository.dart';
 @injectable
 class CalculatorSimulatorRepository extends CalculatorRepository {
   @override
-  Future<CalculatorResult> fetchVatResult(Decimal amount) {
+  Future<CalculatorResult> fetchVatResult(String amount) {
     return Future.delayed(
       Duration(seconds: 1),
         () {
-         return CalculatorResult(amount: amount);
+          var decimalAmount = Decimal.tryParse(amount);
+          if(decimalAmount == null) {
+            throw ArgumentError();
+          }
+          return CalculatorResult(amount: decimalAmount);
         }
     );
   }
 
   @override
-  Future<CalculatorResult> fetchDetailedVatResult(Decimal amount) {
+  Future<CalculatorResult> fetchDetailedVatResult(String amount) {
     return Future.delayed(
       Duration(seconds: 1),
         () {
-          return CalculatorResult(
-            amount: amount
-          );
+          var decimalAmount = Decimal.tryParse(amount);
+          if(decimalAmount == null) {
+            throw ArgumentError();
+          }
+          return CalculatorResult(amount: decimalAmount);
         }
     );
   }

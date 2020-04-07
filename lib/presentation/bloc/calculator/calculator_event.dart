@@ -1,4 +1,3 @@
-import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class CalculatorEvent extends Equatable {
@@ -6,7 +5,7 @@ abstract class CalculatorEvent extends Equatable {
 }
 
 class GetResult extends CalculatorEvent {
-  final Decimal amount;
+  final String amount;
 
   GetResult(this.amount);
 
@@ -15,7 +14,7 @@ class GetResult extends CalculatorEvent {
 }
 
 class GetDetailedResult extends CalculatorEvent {
-  final Decimal amount;
+  final String amount;
 
   GetDetailedResult(this.amount);
 
