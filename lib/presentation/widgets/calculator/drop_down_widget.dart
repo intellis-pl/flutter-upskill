@@ -1,22 +1,29 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:multilayerapp/domain/entities/var_rate_type.dart';
+import 'package:multilayerapp/domain/entities/finance_type.dart';
 
-class DropDownWidget extends StatefulWidget {
+class DropDownWidget<T extends FinanceType> extends StatefulWidget {
+  final T values;
+
+  const DropDownWidget(this.values);
 
   @override
-  _DropDownWidgetState createState() => _DropDownWidgetState();
+  _DropDownWidgetState createState() => _DropDownWidgetState(this.values);
 
 }
 
-class _DropDownWidgetState extends State<DropDownWidget> {
-  VatRateType dropdownValue = VatRateType.RATE_17;
+class _DropDownWidgetState<T extends FinanceType> extends State<DropDownWidget> {
+  final T values;
+  var dropdownValue;
+
+  _DropDownWidgetState(this.values);
 
   @override
   Widget build(BuildContext context) {
+    dropdownValue = values.getValues()[0];
     return
-      DropdownButton<VatRateType>(
+      DropdownButton(
         value: dropdownValue,
         icon: Icon(Icons.arrow_drop_down),
         iconSize: 32,
@@ -28,15 +35,15 @@ class _DropDownWidgetState extends State<DropDownWidget> {
           height: 2,
           color: Colors.deepPurpleAccent,
         ),
-        onChanged: (VatRateType newValue) {
+        onChanged: (newValue) {
           setState(() {
             dropdownValue = newValue;
           });
         },
-        items: (VatRateType.values).map<DropdownMenuItem<VatRateType>>((VatRateType value) {
-         return DropdownMenuItem<VatRateType> (
+        items: values.getValues().map<DropdownMenuItem>((value) {
+         return DropdownMenuItem (
            value: value,
-           child: Text(value.name)
+           child: Text(values.getName(value))
          );
         },
         ).toList()

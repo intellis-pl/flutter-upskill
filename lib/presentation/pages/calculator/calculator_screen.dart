@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:multilayerapp/domain/entities/calculator_response.dart';
+import 'package:multilayerapp/domain/entities/var_rate_type.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/bloc.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/calculator_state.dart' as calculator_state;
 import 'package:multilayerapp/presentation/widgets/calculator/drop_down_widget.dart';
@@ -112,7 +113,7 @@ class CalculatorScreen extends StatelessWidget {
             Container(
               padding: _layoutPadding(),
               child:
-              DropDownWidget()
+              DropDownWidget(VatRateType())
             ),
         )
       ],

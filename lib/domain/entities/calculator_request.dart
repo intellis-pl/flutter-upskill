@@ -3,7 +3,7 @@ import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
-import 'income_tax_type.dart';
+import 'enums/income_tax_type.dart';
 
 class CalculatorRequest extends Equatable {
   final Decimal amount;
