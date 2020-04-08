@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -167,18 +168,10 @@ class CalculatorScreen extends StatelessWidget {
   Widget _buildLoadedLayoutWithData(BuildContext context, CalculatorResponse calculator) {
     return Column(
       children: <Widget>[
-        Container(
-          child: Text("Podana kwota: ${calculator.amount}"),
-        ),
-        Container(
-          child: Text("Kwota zaoszczędzona na podatku VAT: ${calculator.taxAmount}"),
-        ),
-        Container(
-          child: Text("Kwota do obliczenia podatku dochodowego: ${calculator.savedAmount}"),
-        ),
-        Container(
-          child: Text("Kwota zaoszczędzona na podatku dochodowym (%): ${calculator.incomeTaxAmount}"),
-        ),
+        _buildResultLabel("Podana kwota", calculator.amount),
+        _buildResultLabel("Kwota zaoszczędzona na podatku VAT", calculator.taxAmount),
+        _buildResultLabel("Kwota do obliczenia podatku dochodowego", calculator.savedAmount),
+        _buildResultLabel("Kwota zaoszczędzona na podatku dochodowym (%)", calculator.incomeTaxAmount),
         Container(
           child: Text("Faktycznie poniesione koszta: ${calculator.realAmount}",
               style: TextStyle(
@@ -193,5 +186,11 @@ class CalculatorScreen extends StatelessWidget {
 
   EdgeInsetsGeometry _layoutPadding() {
     return EdgeInsets.fromLTRB(10, 2, 10, 2);
+  }
+
+  Widget _buildResultLabel(String label, Decimal amount) {
+    return Container(
+      child: Text("${label}: ${amount}"),
+    );
   }
 }
