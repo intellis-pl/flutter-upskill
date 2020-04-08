@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:ui';
 
 import 'package:decimal/decimal.dart';
@@ -6,9 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multilayerapp/data/models/enums/payer_type.dart';
+import 'package:multilayerapp/data/models/finance_type.dart';
+import 'package:multilayerapp/data/models/income_tax_model.dart';
+import 'package:multilayerapp/data/models/vat_payer_model.dart';
+import 'package:multilayerapp/data/models/vat_rate_model.dart';
 import 'package:multilayerapp/domain/entities/calculator_request.dart';
 import 'package:multilayerapp/domain/entities/calculator_response.dart';
-import 'package:multilayerapp/domain/entities/var_rate_type.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/bloc.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/calculator_state.dart' as calculator_state;
 import 'package:multilayerapp/presentation/providers/calculator_model.dart';
@@ -88,10 +91,30 @@ class CalculatorScreen extends StatelessWidget {
   }
 
   Widget _amountInputField(BuildContext context) {
+    VoidCallback onSelected;
     return Column(
       children: <Widget>[
         _buildAmountEntryRow(context),
-        _buildVatRateSelectionRow(context)
+        _buildSelectionRow(context,
+            DropDownWidget(
+                values: VatRateModel(),
+                onSelected: (FinanceType value) =>
+                    Provider.of<CalculatorModel>(context).addRate(
+                        value.valueType)),
+            "Podaj stawkę VAT"),
+        _buildSelectionRow(context, DropDownWidget(
+            values: IncomeTaxModel(),
+            onSelected: (FinanceType value) =>
+                Provider.of<CalculatorModel>(context).addIncomeTaxType(value.valueType)),
+            "Podatek dochodowy"),
+        _buildSelectionRow(context, DropDownWidget(
+            values: VatPayerModel(),
+            onSelected: (FinanceType value) =>
+                () {
+              bool isPayer = PayerType.POSITIVE == value.valueType ? true : false;
+              Provider.of<CalculatorModel>(context).addVatPayer(isPayer);
+            }),
+            "Czy jeteś płątnikiem VAT?"),
       ],
     );
   }
@@ -126,7 +149,7 @@ class CalculatorScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildVatRateSelectionRow(BuildContext context) {
+  Widget _buildSelectionRow(BuildContext context, Widget dropDownWidget, String label) {
     return Row(
       children: <Widget>[
         Expanded(
@@ -135,7 +158,7 @@ class CalculatorScreen extends StatelessWidget {
             Container(
               padding: _layoutPadding(),
               child:
-                Text("Podaj stawkę VAT"),
+                Text(label),
             ),
         ),
         Expanded(
@@ -144,7 +167,7 @@ class CalculatorScreen extends StatelessWidget {
             Container(
               padding: _layoutPadding(),
               child:
-              DropDownWidget(VatRateType())
+              dropDownWidget
             ),
         )
       ],

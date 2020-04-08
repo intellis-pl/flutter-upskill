@@ -1,14 +1,13 @@
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
-
-import 'enums/income_tax_type.dart';
-import 'enums/rate_type.dart';
+import 'package:multilayerapp/data/models/enums/rate_type.dart';
+import 'package:multilayerapp/data/models/enums/tax_type.dart';
 
 class CalculatorRequest extends Equatable {
   final String amount;
   final RateType vatRate;
-  final IncomeTaxType incomeTaxType;
+  final TaxType incomeTaxType;
   final bool vatPayer;
 
 

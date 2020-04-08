@@ -1,0 +1,4 @@
+enum PayerType {
+  POSITIVE,
+  NEGATIVE
+}

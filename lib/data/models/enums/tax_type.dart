@@ -1,4 +1,4 @@
-enum IncomeTaxType {
+enum TaxType {
   GENERAL_LOWER,
   GENERAL_HIGHER,
   LINEAR,
