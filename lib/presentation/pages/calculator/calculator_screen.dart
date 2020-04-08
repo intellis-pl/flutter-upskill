@@ -6,7 +6,9 @@ import 'package:multilayerapp/domain/entities/calculator_response.dart';
 import 'package:multilayerapp/domain/entities/var_rate_type.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/bloc.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/calculator_state.dart' as calculator_state;
+import 'package:multilayerapp/presentation/providers/calculator_model.dart';
 import 'package:multilayerapp/presentation/widgets/calculator/drop_down_widget.dart';
+import 'package:provider/provider.dart';
 
 class CalculatorScreen extends StatelessWidget {
   static final int LABEL_WIDTH = 3;
@@ -14,35 +16,39 @@ class CalculatorScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('VAT Calculator'),
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            alignment: Alignment.center,
-            child: BlocListener<CalculatorBloc, CalculatorState>(
-              listener: (context, state) {
-                if(state is calculator_state.Error) {
-                  Scaffold.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(state.message),
-                    ),
-                  );
-                }
-              },
-              child: BlocBuilder<CalculatorBloc, CalculatorState>(
-                builder: (context, state) {
-                  return _buildLayoutForState(context, state);
-                },
-              ),
-            )
+    return Consumer<CalculatorModel>(
+      builder: (context, model, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text('VAT Calculator'),
           ),
-        ],
-      ),
+          body: Column(
+            children: <Widget>[
+              Container(
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  alignment: Alignment.center,
+                  child: BlocListener<CalculatorBloc, CalculatorState>(
+                    listener: (context, state) {
+                      if(state is calculator_state.Error) {
+                        Scaffold.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(state.message),
+                          ),
+                        );
+                      }
+                    },
+                    child: BlocBuilder<CalculatorBloc, CalculatorState>(
+                      builder: (context, state) {
+                        return _buildLayoutForState(context, state);
+                      },
+                    ),
+                  )
+              ),
+            ],
+          ),
 
+        );
+      },
     );
   }
 
