@@ -10,10 +10,11 @@ part of 'calculator_event.dart';
 abstract class CalculatorEvent extends Equatable {
   const CalculatorEvent(this._type);
 
-  factory CalculatorEvent.getResult({@required String amount}) = GetResult;
+  factory CalculatorEvent.getResult(
+      {@required CalculatorRequest calculatorRequest}) = GetResult;
 
-  factory CalculatorEvent.getDetailedResult({@required String amount}) =
-      GetDetailedResult;
+  factory CalculatorEvent.getDetailedResult(
+      {@required CalculatorRequest calculatorRequest}) = GetDetailedResult;
 
   final _CalculatorEvent _type;
 
@@ -35,25 +36,27 @@ abstract class CalculatorEvent extends Equatable {
 
 @immutable
 class GetResult extends CalculatorEvent {
-  const GetResult({@required this.amount}) : super(_CalculatorEvent.GetResult);
+  const GetResult({@required this.calculatorRequest})
+      : super(_CalculatorEvent.GetResult);
 
-  final String amount;
+  final CalculatorRequest calculatorRequest;
 
   @override
-  String toString() => 'GetResult(amount:${this.amount})';
+  String toString() => 'GetResult(calculatorRequest:${this.calculatorRequest})';
   @override
-  List get props => [amount];
+  List get props => [calculatorRequest];
 }
 
 @immutable
 class GetDetailedResult extends CalculatorEvent {
-  const GetDetailedResult({@required this.amount})
+  const GetDetailedResult({@required this.calculatorRequest})
       : super(_CalculatorEvent.GetDetailedResult);
 
-  final String amount;
+  final CalculatorRequest calculatorRequest;
 
   @override
-  String toString() => 'GetDetailedResult(amount:${this.amount})';
+  String toString() =>
+      'GetDetailedResult(calculatorRequest:${this.calculatorRequest})';
   @override
-  List get props => [amount];
+  List get props => [calculatorRequest];
 }

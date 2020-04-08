@@ -1,7 +1,11 @@
+import 'dart:developer';
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multilayerapp/domain/entities/calculator_request.dart';
 import 'package:multilayerapp/domain/entities/calculator_response.dart';
 import 'package:multilayerapp/domain/entities/var_rate_type.dart';
 import 'package:multilayerapp/presentation/bloc/calculator/bloc.dart';
@@ -44,6 +48,26 @@ class CalculatorScreen extends StatelessWidget {
                     ),
                   )
               ),
+              Center(
+                child:
+                  Container(
+                    child: FlatButton(
+                        onPressed: () {
+                          model.onSubmit();
+                          _submitToBloc(context, model.calculatorRequest);
+                        },
+                        child: Column(
+                          children: <Widget>[
+                            Icon(Icons.drafts,
+                              color: Colors.deepPurple,
+                            ),
+                            Container(
+                              child: Text("Oblicz"),
+                            )
+                          ],
+                        )),
+                  ),
+              )
             ],
           ),
 
@@ -91,8 +115,8 @@ class CalculatorScreen extends StatelessWidget {
             child:
             TextField(
               cursorWidth: 2,
-              onSubmitted: (value) => {
-                _submitToBloc(context, value),
+              onChanged: (value) => {
+              Provider.of<CalculatorModel>(context).addAmount(value)
               },
             ),
           ),
@@ -126,9 +150,9 @@ class CalculatorScreen extends StatelessWidget {
     );
   }
 
-  void _submitToBloc(BuildContext context, String value) {
+  void _submitToBloc(BuildContext context, CalculatorRequest calculatorRequest) {
     final calculatorBloc = BlocProvider.of<CalculatorBloc>(context);
-    calculatorBloc.add(CalculatorEvent.getResult(amount: value));
+    calculatorBloc.add(CalculatorEvent.getResult(calculatorRequest: calculatorRequest));
   }
 
   Widget _buildLoadingLayout() {
@@ -144,8 +168,23 @@ class CalculatorScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         Container(
-          child:
-          Text("Calculator result: ${calculator.amount}"),
+          child: Text("Podana kwota: ${calculator.amount}"),
+        ),
+        Container(
+          child: Text("Kwota zaoszczędzona na podatku VAT: ${calculator.taxAmount}"),
+        ),
+        Container(
+          child: Text("Kwota do obliczenia podatku dochodowego: ${calculator.savedAmount}"),
+        ),
+        Container(
+          child: Text("Kwota zaoszczędzona na podatku dochodowym (%): ${calculator.incomeTaxAmount}"),
+        ),
+        Container(
+          child: Text("Faktycznie poniesione koszta: ${calculator.realAmount}",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold
+              )),
         ),
         _amountInputField(context)
       ],

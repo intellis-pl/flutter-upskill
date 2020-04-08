@@ -29,19 +29,19 @@ class CalculatorBloc extends Bloc<CalculatorEvent, CalculatorState> {
 
   Stream<CalculatorState> mapGetResultToState(GetResult getResultEvent) async* {
     try{
-      final CalculatorResponse result = await calculatorRepository.fetchVatResult(getResultEvent.amount);
+      final CalculatorResponse result = await calculatorRepository.fetchVatResult(getResultEvent.calculatorRequest);
       yield CalculatorState.loaded(calculator: result);
     } on ArgumentError {
-      yield CalculatorState.error(message: "Invalid Argument: ${getResultEvent.amount}");
+      yield CalculatorState.error(message: "Invalid Argument: ${getResultEvent.calculatorRequest.amount}");
     }
   }
 
   Stream<CalculatorState> mapGetDetailedResultToState(GetDetailedResult getDetailedResult) async* {
     try{
-      final CalculatorResponse result = await calculatorRepository.fetchVatResult(getDetailedResult.amount);
+      final CalculatorResponse result = await calculatorRepository.fetchDetailedVatResult(getDetailedResult.calculatorRequest);
       yield CalculatorState.loaded(calculator: result);
     } on ArgumentError {
-      yield CalculatorState.error(message: "Invalid Argument: ${getDetailedResult.amount}");
+      yield CalculatorState.error(message: "Invalid Argument: ${getDetailedResult.calculatorRequest.amount}");
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:multilayerapp/data/repositories/calculator_repository_impl.dart';
+import 'package:multilayerapp/domain/entities/calculator_request.dart';
 import 'package:multilayerapp/domain/entities/calculator_response.dart';
 import 'package:multilayerapp/injection.dart';
 
@@ -8,6 +9,6 @@ import 'package:multilayerapp/injection.dart';
 @Bind.toType(CalculatorSimulatorRepository, env: Env.dev)
 @injectable
 abstract class CalculatorRepository {
-  Future<CalculatorResponse> fetchVatResult(String amount);
-  Future<CalculatorResponse> fetchDetailedVatResult(String amount);
+  Future<CalculatorResponse> fetchVatResult(CalculatorRequest calculatorRequest);
+  Future<CalculatorResponse> fetchDetailedVatResult(CalculatorRequest calculatorRequest);
 }

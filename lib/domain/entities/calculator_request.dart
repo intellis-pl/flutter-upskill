@@ -1,5 +1,4 @@
 
-import 'package:decimal/decimal.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 
@@ -7,7 +6,7 @@ import 'enums/income_tax_type.dart';
 import 'enums/rate_type.dart';
 
 class CalculatorRequest extends Equatable {
-  final Decimal amount;
+  final String amount;
   final RateType vatRate;
   final IncomeTaxType incomeTaxType;
   final bool vatPayer;
