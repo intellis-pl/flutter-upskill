@@ -95,12 +95,10 @@ class CalculatorScreen extends StatelessWidget {
     return Column(
       children: <Widget>[
         _buildAmountEntryRow(context),
-        _buildSelectionRow(context,
-            DropDownWidget(
+        _buildSelectionRow(context, DropDownWidget(
                 values: VatRateModel(),
                 onSelected: (FinanceType value) =>
-                    Provider.of<CalculatorModel>(context).addRate(
-                        value.valueType)),
+                    Provider.of<CalculatorModel>(context).addRate(value.valueType)),
             "Podaj stawkę VAT"),
         _buildSelectionRow(context, DropDownWidget(
             values: IncomeTaxModel(),

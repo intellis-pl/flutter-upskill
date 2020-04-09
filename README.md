@@ -15,9 +15,12 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+
 #build dependencies for getIt
+
 flutter pub run build_runner watch --delete-conflicting-outputs
 
 
 #build for superEnum
+
 flutter packages pub run build_runner watch
