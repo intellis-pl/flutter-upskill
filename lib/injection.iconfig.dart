@@ -6,7 +6,7 @@
 
 import 'package:multilayerapp/data/repositories/calculator_repository_impl.dart';
 import 'package:multilayerapp/domain/repositories/calculator_repository.dart';
-import 'package:multilayerapp/presentation/bloc/calculator/calculator_bloc.dart';
+import 'package:multilayerapp/presentation/providers/bloc/calculator/calculator_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
